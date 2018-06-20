@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Brick : MonoBehaviour {
 
@@ -14,11 +15,8 @@ public class Brick : MonoBehaviour {
 
         if (other.gameObject.tag == "NotBrick")
         {
-
             IsSnappable = true;
-
             other.gameObject.GetComponent<MeshRenderer>().enabled = true;
-
         }
     }
 
@@ -30,5 +28,4 @@ public class Brick : MonoBehaviour {
             other.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
     }
-
 }

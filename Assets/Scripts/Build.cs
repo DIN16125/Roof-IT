@@ -1,28 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Build : MonoBehaviour {
 
     private bool firstRow = true;
     public int Row;
     public int Column;
+    int id = 0;
     public GameObject brick;
     public GameObject notBrick;
-    private ArrayList notBrickList = new ArrayList();
-    public ArrayList NotBrickList {
-        get
-        {
-            return notBrickList;
-        }
-    }
+    Collider m_Collider;
 
-    
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         firstWall();
-
         pseudoWall1();  
 	}
 
@@ -49,19 +43,31 @@ public class Build : MonoBehaviour {
         float posX = 0f;
         float posY = 0.08980004f;
         float posZ = -2f;
-        for (int y = 0; y <= Row; y++)
+        for (int y = 0; y < Row; y++)
         {
             for (int x = 0; x < Column; x++)
             {
-                notBrick.GetComponent<Transform>().transform.position = new Vector3((float)posX, (float)posY, (float)posZ);
+
+                notBrick.GetComponent<Collider>().enabled = true;
+                notBrick.GetComponent<BoxCollider>().isTrigger = true;
+                notBrick.GetComponent<MeshRenderer>().enabled = true;
+
+                GameObject nb = notBrick;
+                nb.GetComponent<Transform>().transform.position = new Vector3((float)posX, (float)posY, (float)posZ);
+
                 if (!firstRow)
                 {
-                    notBrick.SetActive(false);
+                    m_Collider = nb.GetComponent<Collider>();
+                    m_Collider.enabled = false;
+                    nb.GetComponent<MeshRenderer>().enabled = false;
                 }
-                Instantiate(notBrick);
-                notBrickList.Add(notBrick);
-                
+
+                nb.GetComponent<Text>().text = id.ToString();
+                Instantiate(nb).name = "NotBrick"+id;
+
                 posX += 0.5f;
+                id++;
+                nb = null;
             }
             firstRow = false;
             posX = 0f;
