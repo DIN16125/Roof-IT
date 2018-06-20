@@ -15,11 +15,8 @@ public class Brick : MonoBehaviour {
 
         if (other.gameObject.tag == "NotBrick")
         {
-
             IsSnappable = true;
-            //Debug.Log(other.GetComponent<Text>().text);
             other.gameObject.GetComponent<MeshRenderer>().enabled = true;
-
         }
     }
 
@@ -31,5 +28,4 @@ public class Brick : MonoBehaviour {
             other.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
     }
-
 }

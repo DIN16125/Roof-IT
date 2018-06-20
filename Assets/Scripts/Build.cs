@@ -54,6 +54,7 @@ public class Build : MonoBehaviour {
 
                 GameObject nb = notBrick;
                 nb.GetComponent<Transform>().transform.position = new Vector3((float)posX, (float)posY, (float)posZ);
+
                 if (!firstRow)
                 {
                     m_Collider = nb.GetComponent<Collider>();
