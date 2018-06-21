@@ -115,9 +115,24 @@ public class ControllerGrabObject : MonoBehaviour
 
                 int BlocktoActivateID = int.Parse(other.GetComponent<Text>().text) + plane.GetComponent<Build>().Column;
                 GameObject s = GameObject.Find("NotBrick" + BlocktoActivateID);
-                s.GetComponent<Collider>().isTrigger = true;
-                s.GetComponent<Collider>().enabled = true;
-                s.SetActive(true);
+                if (s != null)
+                {
+                    s.GetComponent<Collider>().isTrigger = true;
+                    s.GetComponent<Collider>().enabled = true;
+                    s.SetActive(true);
+                }
+
+                int look = GameObject.Find("Plane").GetComponent<Build>().available;
+                //Tiles you have to place
+                plane.GetComponent<Build>().available -= 1;
+                Debug.Log(look);
+                if (GameObject.Find("Plane").GetComponent<Build>().available == 0)
+                {
+                    GameObject.Find("Fertig").GetComponent<Text>().text = "FERTIG";
+                    GameObject.Find("Camera UI").GetComponent<GameManager>().StopAllCoroutines();
+                    //StopCoroutine(GameObject.Find("Camera UI").GetComponent<GameManager>().time());
+                }
+
             }
             else
             {

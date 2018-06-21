@@ -12,6 +12,7 @@ public class Build : MonoBehaviour {
     public GameObject tile;
     public GameObject notBrick;
     Collider m_Collider;
+    public int available = 0;
 
 
     // Use this for initialization
@@ -70,6 +71,7 @@ public class Build : MonoBehaviour {
                 posX += 0.18f;
                 id++;
                 nb = null;
+                available++;
             }
            
 
