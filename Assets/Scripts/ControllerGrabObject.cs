@@ -95,7 +95,7 @@ public class ControllerGrabObject : MonoBehaviour
     {
         if (GetComponent<FixedJoint>())
         {
-            if (objectInHand.tag == "Brick" && objectInHand.GetComponent<Brick>().IsSnappable && !objectInHand.GetComponent<Brick>().isSnapped)
+            if (objectInHand.tag == "Tile" && objectInHand.GetComponent<Brick>().IsSnappable && !objectInHand.GetComponent<Brick>().isSnapped)
             {
                 GameObject other = objectInHand.GetComponent<Brick>().CollidingObject;
 
@@ -114,8 +114,8 @@ public class ControllerGrabObject : MonoBehaviour
                 GameObject plane = GameObject.FindGameObjectWithTag("Floor");
 
                 int BlocktoActivateID = int.Parse(other.GetComponent<Text>().text) + plane.GetComponent<Build>().Column;
-                GameObject s = GameObject.Find("NotBrick" + BlocktoActivateID.ToString());
-                s.GetComponent<BoxCollider>().isTrigger = true;
+                GameObject s = GameObject.Find("NotBrick" + BlocktoActivateID);
+                s.GetComponent<Collider>().isTrigger = true;
                 s.GetComponent<Collider>().enabled = true;
                 s.SetActive(true);
             }

@@ -9,7 +9,7 @@ public class Build : MonoBehaviour {
     public int Row;
     public int Column;
     int id = 0;
-    public GameObject brick;
+    public GameObject tile;
     public GameObject notBrick;
     Collider m_Collider;
 
@@ -29,8 +29,8 @@ public class Build : MonoBehaviour {
         {
             for (int x = 1; x <= Column; x++)
             {
-                brick.GetComponent<Transform>().transform.position = new Vector3((float)posX, (float)posY, (float)posZ);
-                Instantiate(brick);
+                tile.GetComponent<Transform>().transform.position = new Vector3((float)posX, (float)posY, (float)posZ);
+                Instantiate(tile);
                 posX += 0.5f;
             }
             posX = 0f;
@@ -40,6 +40,7 @@ public class Build : MonoBehaviour {
 
     void pseudoWall1()
     {
+
         float posX = 0f;
         float posY = 0.08980004f;
         float posZ = -2f;
@@ -49,7 +50,7 @@ public class Build : MonoBehaviour {
             {
 
                 notBrick.GetComponent<Collider>().enabled = true;
-                notBrick.GetComponent<BoxCollider>().isTrigger = true;
+                notBrick.GetComponent<Collider>().isTrigger = true;
                 notBrick.GetComponent<MeshRenderer>().enabled = true;
 
                 GameObject nb = notBrick;
@@ -61,17 +62,23 @@ public class Build : MonoBehaviour {
                     m_Collider.enabled = false;
                     nb.GetComponent<MeshRenderer>().enabled = false;
                 }
-
                 nb.GetComponent<Text>().text = id.ToString();
-                Instantiate(nb).name = "NotBrick"+id;
+                Instantiate(nb).name = "NotBrick" + id;
 
-                posX += 0.5f;
+                GameObject.Find("NotBrick" + id).transform.SetParent(GameObject.Find("PseudoWall").transform);
+
+                posX += 0.18f;
                 id++;
                 nb = null;
             }
+           
+
             firstRow = false;
             posX = 0f;
-            posY += 0.179f;
+            posY += 0.013f;
+            posZ += 0.16f;
         }
+        GameObject.Find("PseudoWall").transform.Rotate(new Vector3(-45f, 180f, 0f));
+        GameObject.Find("PseudoWall").transform.position = new Vector3(4f, 1f, -2f);
     }
 }
