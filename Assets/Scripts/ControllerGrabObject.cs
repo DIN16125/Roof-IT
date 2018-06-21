@@ -95,7 +95,7 @@ public class ControllerGrabObject : MonoBehaviour
     {
         if (GetComponent<FixedJoint>())
         {
-            if (objectInHand.tag == "Brick" && objectInHand.GetComponent<Brick>().IsSnappable && !objectInHand.GetComponent<Brick>().isSnapped)
+            if (objectInHand.tag == "Tile" && objectInHand.GetComponent<Brick>().IsSnappable && !objectInHand.GetComponent<Brick>().isSnapped)
             {
                 GameObject other = objectInHand.GetComponent<Brick>().CollidingObject;
 

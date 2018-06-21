@@ -67,7 +67,7 @@ public class Build : MonoBehaviour {
 
                 GameObject.Find("NotBrick" + id).transform.SetParent(GameObject.Find("PseudoWall").transform);
 
-                posX += 0.5f;
+                posX += 0.18f;
                 id++;
                 nb = null;
             }
@@ -75,8 +75,10 @@ public class Build : MonoBehaviour {
 
             firstRow = false;
             posX = 0f;
-            posY += 0.179f;
+            posY += 0.013f;
+            posZ += 0.16f;
         }
-        GameObject.Find("PseudoWall").transform.Rotate(new Vector3(45f, 0f, 0f));
+        GameObject.Find("PseudoWall").transform.Rotate(new Vector3(-45f, 180f, 0f));
+        GameObject.Find("PseudoWall").transform.position = new Vector3(4f, 1f, -2f);
     }
 }
