@@ -77,10 +77,35 @@ public class ControllerGrabObject : MonoBehaviour
 
     private void GrabObject()
     {
-        objectInHand = collidingObject;
-        collidingObject = null;
-        var joint = AddFixedJoint();
-        joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+        if(collidingObject.tag == "Tile_Spawner")
+        {
+            GameObject spawner = GameObject.FindWithTag("Tile_Spawner");
+            if (spawner.GetComponent<TileSpawner>().counter > 0)
+            {
+                GameObject tile = GameObject.FindWithTag("Tile_Spawner").GetComponent<TileSpawner>().toSpawn;
+                spawner.GetComponent<TileSpawner>().counter -= 1;
+
+                tile.transform.position = collidingObject.transform.position;
+                GameObject clone = Instantiate(tile);
+
+                objectInHand = clone;
+                var joint = AddFixedJoint();
+                joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+                
+            }
+            if (spawner.GetComponent<TileSpawner>().counter == 0)
+            {
+                spawner.SetActive(false);
+            }
+
+        }
+        else
+        {
+            objectInHand = collidingObject;
+            collidingObject = null;
+            var joint = AddFixedJoint();
+            joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+        }   
     }
 
     private FixedJoint AddFixedJoint()
@@ -130,7 +155,6 @@ public class ControllerGrabObject : MonoBehaviour
                 {
                     GameObject.Find("Fertig").GetComponent<Text>().text = "FERTIG";
                     GameObject.Find("Camera UI").GetComponent<GameManager>().StopAllCoroutines();
-                    //StopCoroutine(GameObject.Find("Camera UI").GetComponent<GameManager>().time());
                 }
 
             }

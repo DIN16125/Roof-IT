@@ -42,9 +42,9 @@ public class Build : MonoBehaviour {
     void pseudoWall1()
     {
 
-        float posX = 0f;
-        float posY = 0.08980004f;
-        float posZ = -2f;
+        float posX = -0.19f;
+        float posY = 2.55f;
+        float posZ = -3.885f;
         for (int y = 0; y < Row; y++)
         {
             for (int x = 0; x < Column; x++)
@@ -81,6 +81,8 @@ public class Build : MonoBehaviour {
             posZ += 0.16f;
         }
         GameObject.Find("PseudoWall").transform.Rotate(new Vector3(-45f, 180f, 0f));
-        GameObject.Find("PseudoWall").transform.position = new Vector3(4f, 1f, -2f);
+        GameObject.Find("PseudoWall").transform.position = new Vector3(-0.369f, 2.164f, -6.976f);
+        GameObject spawner = GameObject.FindGameObjectWithTag("Tile_Spawner");
+        spawner.GetComponent<TileSpawner>().counter = available;
     }
 }
