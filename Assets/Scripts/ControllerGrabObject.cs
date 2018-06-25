@@ -77,10 +77,35 @@ public class ControllerGrabObject : MonoBehaviour
 
     private void GrabObject()
     {
-        objectInHand = collidingObject;
-        collidingObject = null;
-        var joint = AddFixedJoint();
-        joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+        if(collidingObject.tag == "Tile_Spawner")
+        {
+            GameObject spawner = GameObject.FindWithTag("Tile_Spawner");
+            if (spawner.GetComponent<TileSpawner>().counter > 0)
+            {
+                GameObject tile = GameObject.FindWithTag("Tile_Spawner").GetComponent<TileSpawner>().toSpawn;
+                spawner.GetComponent<TileSpawner>().counter -= 1;
+
+                tile.transform.position = collidingObject.transform.position;
+                GameObject clone = Instantiate(tile);
+
+                objectInHand = clone;
+                var joint = AddFixedJoint();
+                joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+                
+            }
+            if (spawner.GetComponent<TileSpawner>().counter == 0)
+            {
+                spawner.SetActive(false);
+            }
+
+        }
+        else
+        {
+            objectInHand = collidingObject;
+            collidingObject = null;
+            var joint = AddFixedJoint();
+            joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+        }   
     }
 
     private FixedJoint AddFixedJoint()
@@ -115,9 +140,23 @@ public class ControllerGrabObject : MonoBehaviour
 
                 int BlocktoActivateID = int.Parse(other.GetComponent<Text>().text) + plane.GetComponent<Build>().Column;
                 GameObject s = GameObject.Find("NotBrick" + BlocktoActivateID);
-                s.GetComponent<Collider>().isTrigger = true;
-                s.GetComponent<Collider>().enabled = true;
-                s.SetActive(true);
+                if (s != null)
+                {
+                    s.GetComponent<Collider>().isTrigger = true;
+                    s.GetComponent<Collider>().enabled = true;
+                    s.SetActive(true);
+                }
+
+                int look = GameObject.Find("Plane").GetComponent<Build>().available;
+                //Tiles you have to place
+                plane.GetComponent<Build>().available -= 1;
+                Debug.Log(look);
+                if (GameObject.Find("Plane").GetComponent<Build>().available == 0)
+                {
+                    GameObject.Find("Fertig").GetComponent<Text>().text = "FERTIG";
+                    GameObject.Find("Camera UI").GetComponent<GameManager>().StopAllCoroutines();
+                }
+
             }
             else
             {
